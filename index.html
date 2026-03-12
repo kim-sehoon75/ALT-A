@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI 리터러시 태도 검사</title>
+<title>AI 리터러시 태도 검사 (4점 척도)</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -21,262 +21,88 @@
     --shadow: 0 2px 20px rgba(37,99,235,0.07);
     --radius: 16px;
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'Noto Sans KR', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    padding-bottom: 160px;
-  }
-
-  /* HEADER */
-  .site-header {
-    background: var(--white);
-    border-bottom: 1px solid var(--border);
-    padding: 0 32px;
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 1px 8px rgba(0,0,0,0.06);
-  }
+  body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 160px; }
+  .site-header { background: var(--white); border-bottom: 1px solid var(--border); padding: 0 32px; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 8px rgba(0,0,0,0.06); }
   .logo { font-family: 'Noto Serif KR', serif; font-size: 16px; font-weight: 700; color: var(--navy); }
   .logo span { color: var(--blue); }
   .header-badge { font-size: 11px; font-weight: 500; color: var(--blue); background: var(--blue-light); padding: 4px 12px; border-radius: 20px; }
-
-  /* HERO */
-  .hero {
-    background: var(--white);
-    border-bottom: 1px solid var(--border);
-    padding: 44px 32px 36px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: -60px; left: 50%;
-    transform: translateX(-50%);
-    width: 500px; height: 260px;
-    background: radial-gradient(ellipse, rgba(37,99,235,0.05) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero-tag {
-    display: inline-block;
-    font-size: 11px; font-weight: 600; color: var(--blue);
-    background: var(--blue-light); border: 1px solid #bfdbfe;
-    padding: 4px 14px; border-radius: 20px;
-    letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px;
-  }
-  .hero h1 {
-    font-family: 'Noto Serif KR', serif;
-    font-size: clamp(22px, 4vw, 32px); font-weight: 700;
-    color: var(--navy); line-height: 1.35; margin-bottom: 12px;
-  }
+  .hero { background: var(--white); border-bottom: 1px solid var(--border); padding: 44px 32px 36px; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -60px; left: 50%; transform: translateX(-50%); width: 500px; height: 260px; background: radial-gradient(ellipse, rgba(37,99,235,0.05) 0%, transparent 70%); pointer-events: none; }
+  .hero-tag { display: inline-block; font-size: 11px; font-weight: 600; color: var(--blue); background: var(--blue-light); border: 1px solid #bfdbfe; padding: 4px 14px; border-radius: 20px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; }
+  .hero h1 { font-family: 'Noto Serif KR', serif; font-size: clamp(22px, 4vw, 32px); font-weight: 700; color: var(--navy); line-height: 1.35; margin-bottom: 12px; }
   .hero h1 em { font-style: normal; color: var(--blue); }
   .hero p { font-size: 16px; color: var(--sub); line-height: 1.7; max-width: 480px; margin: 0 auto 22px; font-weight: 300; }
-  .hero-meta {
-    display: inline-flex; align-items: center; gap: 20px;
-    background: var(--bg); border: 1px solid var(--border);
-    border-radius: 12px; padding: 10px 22px;
-  }
+  .hero-meta { display: inline-flex; align-items: center; gap: 20px; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 10px 22px; }
   .meta-item { font-size: 14px; color: var(--sub); }
-
-  /* PROGRESS */
   .progress-wrap { max-width: 680px; margin: 28px auto 0; padding: 0 24px; }
   .progress-header { display: flex; justify-content: space-between; margin-bottom: 7px; }
   .progress-label { font-size: 14px; font-weight: 600; color: var(--sub); letter-spacing: 0.5px; }
   .progress-count { font-size: 14px; font-weight: 600; color: var(--blue); }
   .progress-track { height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
   .progress-bar { height: 100%; background: linear-gradient(90deg, var(--blue), var(--accent)); border-radius: 3px; width: 0%; transition: width 0.5s cubic-bezier(.4,0,.2,1); }
-
-  /* QUESTIONS */
   .container { max-width: 800px; margin: 0 auto; padding: 28px 24px 0; }
-
-  .q-card {
-    background: var(--white);
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px 22px;
-    margin-bottom: 10px;
-    box-shadow: var(--shadow);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    opacity: 0;
-    transform: translateY(12px);
-    animation: cardIn 0.4s ease forwards;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
+  .q-card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 20px 22px; margin-bottom: 10px; box-shadow: var(--shadow); cursor: pointer; transition: all 0.2s ease; opacity: 0; transform: translateY(12px); animation: cardIn 0.4s ease forwards; display: flex; align-items: center; gap: 16px; }
   .q-card:hover { box-shadow: 0 6px 24px rgba(37,99,235,0.11); border-color: #bfdbfe; }
   .q-card.active { border-color: var(--blue); background: #f0f6ff; box-shadow: 0 0 0 3px rgba(37,99,235,0.1), 0 6px 24px rgba(37,99,235,0.12); }
   .q-card.answered { border-color: #bbf7d0; background: #fafffd; }
   .q-card.answered.active { border-color: var(--blue); background: #f0f6ff; }
-
-  .q-card:nth-child(1) { animation-delay: 0.04s; }
-  .q-card:nth-child(2) { animation-delay: 0.08s; }
-  .q-card:nth-child(3) { animation-delay: 0.12s; }
-  .q-card:nth-child(4) { animation-delay: 0.16s; }
-  .q-card:nth-child(5) { animation-delay: 0.20s; }
-  .q-card:nth-child(6) { animation-delay: 0.24s; }
-  .q-card:nth-child(7) { animation-delay: 0.28s; }
-  .q-card:nth-child(8) { animation-delay: 0.32s; }
-  .q-card:nth-child(9) { animation-delay: 0.36s; }
-
   @keyframes cardIn { to { opacity: 1; transform: translateY(0); } }
-
-  .q-num {
-    flex-shrink: 0; width: 36px; height: 36px;
-    border-radius: 9px; background: var(--blue-light);
-    color: var(--blue); font-size: 15px; font-weight: 700;
-    display: flex; align-items: center; justify-content: center;
-    transition: background 0.2s, color 0.2s;
-  }
+  .q-num { flex-shrink: 0; width: 36px; height: 36px; border-radius: 9px; background: var(--blue-light); color: var(--blue); font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center; transition: background 0.2s, color 0.2s; }
   .q-card.active .q-num { background: var(--blue); color: var(--white); }
   .q-card.answered:not(.active) .q-num { background: #bbf7d0; color: var(--green); }
-
   .q-body { flex: 1; }
-  .q-text { font-size: 17px; font-weight: 500; color: var(--text); line-height: 1.6; }
-
-  .q-badge {
-    flex-shrink: 0;
-    min-width: 90px;
-    height: 34px;
-    border-radius: 20px;
-    border: 2px solid var(--border);
-    background: var(--bg);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 12px; font-weight: 600; color: #b0bec5;
-    padding: 0 10px;
-    text-align: center;
-    transition: all 0.25s;
-    white-space: nowrap;
-  }
-  .q-card.answered .q-badge {
-    border-color: var(--blue);
-    background: var(--blue);
-    color: var(--white);
-    font-size: 12px;
-  }
-
-  /* FIXED BOTTOM SCALE */
-  .fixed-scale {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    background: var(--white);
-    border-top: 1px solid var(--border);
-    box-shadow: 0 -4px 28px rgba(0,0,0,0.09);
-    z-index: 200;
-    padding: 14px 24px 22px;
-  }
+  .q-text { font-size: 16px; font-weight: 500; color: var(--text); line-height: 1.6; }
+  .q-badge { flex-shrink: 0; min-width: 90px; height: 34px; border-radius: 20px; border: 2px solid var(--border); background: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: #b0bec5; padding: 0 10px; text-align: center; transition: all 0.25s; white-space: nowrap; }
+  .q-card.answered .q-badge { border-color: var(--blue); background: var(--blue); color: var(--white); font-size: 12px; }
+  .fixed-scale { position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); border-top: 1px solid var(--border); box-shadow: 0 -4px 28px rgba(0,0,0,0.09); z-index: 200; padding: 14px 24px 22px; }
   .scale-inner { max-width: 680px; margin: 0 auto; }
-
-  .scale-guide {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 11px;
-  }
-  .scale-guide-q {
-    font-size: 14px; font-weight: 600; color: var(--blue);
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 65%;
-  }
+  .scale-guide { display: flex; justify-content: space-between; align-items: center; margin-bottom: 11px; }
+  .scale-guide-q { font-size: 14px; font-weight: 600; color: var(--blue); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 65%; }
   .scale-guide-hint { font-size: 13px; color: var(--sub); flex-shrink: 0; }
-
   .scale-row { display: flex; gap: 8px; }
-
-  .scale-btn {
-    flex: 1;
-    display: flex; flex-direction: column; align-items: center; gap: 5px;
-    padding: 10px 4px 9px;
-    border-radius: 12px;
-    border: 1.5px solid var(--border);
-    background: var(--bg);
-    cursor: pointer;
-    transition: all 0.15s ease;
-    user-select: none;
-  }
+  .scale-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 10px 4px 9px; border-radius: 12px; border: 1.5px solid var(--border); background: var(--bg); cursor: pointer; transition: all 0.15s ease; user-select: none; }
   .scale-btn:hover { border-color: var(--blue-mid); background: var(--blue-light); transform: translateY(-2px); }
   .scale-btn.selected { border-color: var(--blue); background: var(--blue); transform: translateY(-3px); box-shadow: 0 4px 14px rgba(37,99,235,0.28); }
-
   .s-num { font-size: 20px; font-weight: 700; color: var(--sub); line-height: 1; transition: color 0.15s; }
   .scale-btn:hover .s-num { color: var(--blue); }
   .scale-btn.selected .s-num { color: var(--white); }
-
   .s-label { font-size: 11px; color: #94a3b8; text-align: center; line-height: 1.3; transition: color 0.15s; word-break: keep-all; }
   .scale-btn:hover .s-label { color: var(--blue); }
   .scale-btn.selected .s-label { color: rgba(255,255,255,0.85); }
-
-  /* submit */
-  .btn-submit-bar {
-    width: 100%; padding: 13px;
-    background: var(--blue); color: var(--white);
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 14px; font-weight: 600;
-    border: none; border-radius: 12px;
-    cursor: pointer; transition: all 0.2s;
-    box-shadow: 0 4px 14px rgba(37,99,235,0.22);
-    display: none;
-  }
+  .btn-submit-bar { width: 100%; padding: 13px; background: var(--blue); color: var(--white); font-family: 'Noto Sans KR', sans-serif; font-size: 14px; font-weight: 600; border: none; border-radius: 12px; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 14px rgba(37,99,235,0.22); display: none; }
   .btn-submit-bar.show { display: block; animation: cardIn 0.3s ease forwards; }
   .btn-submit-bar:hover { background: #1d4ed8; transform: translateY(-1px); }
-
-  .unanswered-note {
-    display: none; font-size: 12px; color: #dc2626;
-    background: #fee2e2; border: 1px solid #fecaca;
-    border-radius: 8px; padding: 8px 14px;
-    margin-bottom: 10px; text-align: center;
-  }
-
-  /* RESULT */
-  .result-panel {
-    display: none;
-    background: var(--white); border: 1px solid #bbf7d0;
-    border-radius: var(--radius); padding: 32px 28px;
-    margin-top: 12px;
-    box-shadow: 0 4px 24px rgba(5,150,105,0.1);
-  }
+  .unanswered-note { display: none; font-size: 12px; color: #dc2626; background: #fee2e2; border: 1px solid #fecaca; border-radius: 8px; padding: 8px 14px; margin-bottom: 10px; text-align: center; }
+  .result-panel { display: none; background: var(--white); border: 1px solid #bbf7d0; border-radius: var(--radius); padding: 32px 28px; margin-top: 12px; box-shadow: 0 4px 24px rgba(5,150,105,0.1); }
   .result-panel.show { display: block; animation: cardIn 0.4s ease forwards; }
-
   .result-header { text-align: center; margin-bottom: 24px; }
   .result-icon { width: 52px; height: 52px; border-radius: 50%; background: #d1fae5; display: flex; align-items: center; justify-content: center; font-size: 24px; margin: 0 auto 12px; }
   .result-header h2 { font-family: 'Noto Serif KR', serif; font-size: 19px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
   .result-header p { font-size: 12px; color: var(--sub); }
-
   .score-total { background: linear-gradient(135deg, #eff6ff, #dbeafe); border: 1px solid #bfdbfe; border-radius: 12px; padding: 18px 22px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
   .score-total-label { font-size: 14px; font-weight: 600; color: var(--navy); }
   .score-total-sub { font-size: 12px; color: var(--sub); margin-top: 3px; }
   .score-total-val { font-family: 'Noto Serif KR', serif; font-size: 30px; font-weight: 700; color: var(--blue); text-align: right; }
-
-  .score-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+  .score-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
   .score-card { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
-  .score-card-label { font-size: 10px; font-weight: 600; color: var(--sub); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 6px; }
+  .score-card-label { font-size: 12px; font-weight: 600; color: var(--navy); margin-bottom: 6px; line-height: 1.4; }
   .score-card-val { font-size: 22px; font-weight: 700; color: var(--blue); line-height: 1; margin-bottom: 3px; }
   .score-card-sub { font-size: 11px; color: var(--sub); }
-
-  .dim-title { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 10px; }
-  .dim-bar-wrap { margin-bottom: 9px; }
-  .dim-bar-meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--sub); margin-bottom: 4px; }
+  .dim-title { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 12px; }
+  .dim-bar-wrap { margin-bottom: 14px; }
+  .dim-bar-meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--sub); margin-bottom: 3px; }
+  .dim-bar-desc { font-size: 11px; color: #94a3b8; margin-bottom: 5px; line-height: 1.4; }
   .dim-bar-track { height: 7px; background: var(--border); border-radius: 4px; overflow: hidden; }
   .dim-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--blue), var(--accent)); transition: width 1s cubic-bezier(.4,0,.2,1); }
-
   .review-title { font-size: 13px; font-weight: 600; color: var(--navy); margin: 18px 0 10px; padding-top: 18px; border-top: 1px solid var(--border); }
   .review-item { display: flex; align-items: center; gap: 10px; padding: 9px 11px; border-radius: 8px; background: var(--bg); margin-bottom: 5px; }
   .review-num { flex-shrink: 0; width: 20px; height: 20px; border-radius: 5px; background: var(--blue-light); color: var(--blue); font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
   .review-q { flex: 1; font-size: 12px; color: var(--sub); line-height: 1.4; }
-  .review-score { flex-shrink: 0; font-weight: 700; color: var(--blue); font-size: 13px; }
-
+  .review-score-num { flex-shrink: 0; width: 28px; height: 28px; border-radius: 6px; background: var(--blue); color: white; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
   .btn-reset { width: 100%; margin-top: 16px; padding: 11px; border: 1.5px solid var(--border); background: var(--white); border-radius: 10px; font-family: 'Noto Sans KR', sans-serif; font-size: 13px; color: var(--sub); cursor: pointer; transition: all 0.2s; }
   .btn-reset:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
-
   footer { text-align: center; padding: 20px 24px 0; font-size: 11px; color: #94a3b8; }
-
   @media (max-width: 480px) {
     .hero { padding: 32px 16px 28px; }
     .container { padding: 20px 14px 0; }
@@ -292,7 +118,7 @@
 
 <header class="site-header">
   <div class="logo">AI<span>Literacy</span> Lab</div>
-  <div class="header-badge">DEMO v1.0</div>
+  <div class="header-badge">4점 척도</div>
 </header>
 
 <div class="hero">
@@ -300,8 +126,8 @@
   <h1>AI 리터러시 <em>태도</em> 검사</h1>
   <p>문항을 클릭하면 하단 고정 바에서 점수를 입력할 수 있습니다.<br>선택 후 자동으로 다음 문항으로 이동합니다.</p>
   <div class="hero-meta">
-    <div class="meta-item">📋 총 9문항</div>
-    <div class="meta-item">⏱ 약 3분 소요</div>
+    <div class="meta-item">📋 총 28문항</div>
+    <div class="meta-item">⏱ 약 5분 소요</div>
     <div class="meta-item">🔒 익명 응답</div>
   </div>
 </div>
@@ -309,28 +135,16 @@
 <div class="progress-wrap">
   <div class="progress-header">
     <span class="progress-label">응답 진행률</span>
-    <span class="progress-count" id="progressCount">0 / 9</span>
+    <span class="progress-count" id="progressCount">0 / 28</span>
   </div>
   <div class="progress-track">
     <div class="progress-bar" id="progressBar"></div>
   </div>
 </div>
 
-<main class="container">
-
-  <div class="q-card" data-q="1"><div class="q-num">1</div><div class="q-body"><div class="q-text">AI 기술의 발전은 세상을 더 나은 곳으로 만들 것이라 생각한다.</div></div><div class="q-badge" id="badge-1">미응답</div></div>
-  <div class="q-card" data-q="2"><div class="q-num">2</div><div class="q-body"><div class="q-text">AI 도구 활용은 결과물 뿐 아니라, 활용 과정에도 긍정적 변화를 가져온다.</div></div><div class="q-badge" id="badge-2">미응답</div></div>
-  <div class="q-card" data-q="3"><div class="q-num">3</div><div class="q-body"><div class="q-text">현 수준의 AI 기술은 사회적으로 유의미한 긍정적 변화를 가져올 수 없다.</div></div><div class="q-badge" id="badge-3">미응답</div></div>
-  <div class="q-card" data-q="4"><div class="q-num">4</div><div class="q-body"><div class="q-text">기술의 효과성을 극대화하기 위해서라면 AI의 설명력은 중요하지 않다.</div></div><div class="q-badge" id="badge-4">미응답</div></div>
-  <div class="q-card" data-q="5"><div class="q-num">5</div><div class="q-body"><div class="q-text">지나치게 데이터 의존적인 AI 모델은 과거의 실수를 되풀이할 우려가 있다.</div></div><div class="q-badge" id="badge-5">미응답</div></div>
-  <div class="q-card" data-q="6"><div class="q-num">6</div><div class="q-body"><div class="q-text">AI 개발 시 경제성보다도 잠재적인 위험성을 우선 고려해야 한다.</div></div><div class="q-badge" id="badge-6">미응답</div></div>
-  <div class="q-card" data-q="7"><div class="q-num">7</div><div class="q-body"><div class="q-text">나는 사람들이 전반적으로 선한 의도를 갖고 AI를 활용한다고 믿는다.</div></div><div class="q-badge" id="badge-7">미응답</div></div>
-  <div class="q-card" data-q="8"><div class="q-num">8</div><div class="q-body"><div class="q-text">AI를 활용할 때, 다양한 프롬프트를 활용해 접근하는 것을 즐긴다.</div></div><div class="q-badge" id="badge-8">미응답</div></div>
-  <div class="q-card" data-q="9"><div class="q-num">9</div><div class="q-body"><div class="q-text">AI에 대한 주요 이슈는 대중에게 공개되지 않은 곳에서 논의되고 결정된다.</div></div><div class="q-badge" id="badge-9">미응답</div></div>
-
+<main class="container" id="questionContainer">
   <div class="result-panel" id="resultPanel"></div>
-
-  <footer>AI 리터러시 태도 검사 Demo v1.0 &nbsp;·&nbsp; 본 검사는 연구 목적으로 제작된 데모 버전입니다</footer>
+  <footer>AI 리터러시 태도 검사 Demo v2.1 (4점 척도) &nbsp;·&nbsp; 본 검사는 연구 목적으로 제작된 데모 버전입니다</footer>
 </main>
 
 <!-- FIXED SCALE BAR -->
@@ -339,107 +153,115 @@
     <div class="unanswered-note" id="unansweredNote">⚠ 아직 응답하지 않은 문항이 있습니다. 모든 문항에 응답해 주세요.</div>
     <div class="scale-guide">
       <span class="scale-guide-q" id="scaleGuideQ">↑ 문항을 클릭하여 선택해주세요</span>
-      <span class="scale-guide-hint">1 = 전혀 그렇지 않다 &nbsp;·&nbsp; 5 = 매우 그렇다</span>
+      <span class="scale-guide-hint">1 = 전혀 아니다 &nbsp;·&nbsp; 4 = 매우 그렇다</span>
     </div>
     <div class="scale-row" id="scaleRow">
       <button class="scale-btn" data-v="1"><div class="s-num">1</div><div class="s-label">전혀 아니다</div></button>
       <button class="scale-btn" data-v="2"><div class="s-num">2</div><div class="s-label">아니다</div></button>
-      <button class="scale-btn" data-v="3"><div class="s-num">3</div><div class="s-label">보통이다</div></button>
-      <button class="scale-btn" data-v="4"><div class="s-num">4</div><div class="s-label">그렇다</div></button>
-      <button class="scale-btn" data-v="5"><div class="s-num">5</div><div class="s-label">매우 그렇다</div></button>
+      <button class="scale-btn" data-v="3"><div class="s-num">3</div><div class="s-label">그렇다</div></button>
+      <button class="scale-btn" data-v="4"><div class="s-num">4</div><div class="s-label">매우 그렇다</div></button>
     </div>
     <button class="btn-submit-bar" id="submitBtn" onclick="submitSurvey()">✓ 모든 문항 완료 — 결과 확인하기</button>
   </div>
 </div>
 
 <script>
+  const TOTAL = 28;
+
   const questions = [
-    { id:1, reverse:false, dim:"긍정적 전망" },
-    { id:2, reverse:false, dim:"긍정적 전망" },
-    { id:3, reverse:true,  dim:"긍정적 전망" },
-    { id:4, reverse:true,  dim:"윤리·설명력" },
-    { id:5, reverse:false, dim:"위험인식" },
-    { id:6, reverse:false, dim:"위험인식" },
-    { id:7, reverse:false, dim:"신뢰·태도" },
-    { id:8, reverse:false, dim:"활용 성향" },
-    { id:9, reverse:true,  dim:"신뢰·태도" },
+    { id:1,  reverse:false, dim:"INNO",  text:"나는 업무에 활용할 수 있는 새로운 AI 도구를 자발적으로 탐색한다." },
+    { id:2,  reverse:true,  dim:"JUDE",  text:"나는 AI가 제공한 정보를 다른 출처와 교차 확인하지 않는다." },
+    { id:3,  reverse:false, dim:"APAP",  text:"나는 익숙하지 않은 AI 도구라도 조직에서 요구하면 적극적으로 배운다." },
+    { id:4,  reverse:false, dim:"APAP",  text:"나는 AI가 내 역할 일부를 대체하더라도 새로운 역할을 찾아낼 수 있다고 믿는다." },
+    { id:5,  reverse:true,  dim:"INNO",  text:"나는 AI를 먼저 도입하기보다 다른 사람이 사용하는 것을 지켜본 뒤 따른다." },
+    { id:6,  reverse:false, dim:"APAP",  text:"나는 AI 도입으로 인한 업무 변화를 위협이 아닌 성장 기회로 받아들인다." },
+    { id:7,  reverse:true,  dim:"ETHIC", text:"나는 AI가 효율적이면 윤리적 문제는 부차적이라고 생각한다." },
+    { id:8,  reverse:false, dim:"ETHIC", text:"나는 AI의 판단이 편향될 수 있는 점을 항상 염두에 둔다." },
+    { id:9,  reverse:false, dim:"ETHIC", text:"나는 AI를 활용할 때 그 결과가 타인에게 미칠 영향을 함께 고려한다." },
+    { id:10, reverse:true,  dim:"APAP",  text:"나는 조직이 AI를 도입한다고 하면 내 자리가 위협받는다는 느낌이 든다." },
+    { id:11, reverse:true,  dim:"JUDE",  text:"나는 어려운 결정을 내려야 할 때 AI의 판단에 맡기는 것이 편하다." },
+    { id:12, reverse:false, dim:"ETHIC", text:"나는 AI가 생성한 결과물이 특정 집단에 불리하게 작용할 수 있는지 점검한다." },
+    { id:13, reverse:false, dim:"ETHIC", text:"나는 AI를 사용한 결과에 대해 내가 책임을 져야 한다고 생각한다." },
+    { id:14, reverse:true,  dim:"JUDE",  text:"나는 AI 결과물의 오류 여부를 굳이 점검하지 않는다." },
+    { id:15, reverse:false, dim:"APAP",  text:"나는 AI 전환 과정에서 발생하는 시행착오를 자연스러운 과정으로 받아들인다." },
+    { id:16, reverse:false, dim:"INNO",  text:"나는 업무 문제를 해결할 때 AI 활용 가능성을 먼저 검토한다." },
+    { id:17, reverse:true,  dim:"APAP",  text:"나는 기존에 익숙한 업무 방식이 AI로 대체될 때 저항감을 느낀다." },
+    { id:18, reverse:true,  dim:"JUDE",  text:"나는 AI의 답변이 내 생각과 달라도 AI 쪽이 맞을 것이라고 여긴다." },
+    { id:19, reverse:true,  dim:"JUDE",  text:"나는 AI를 사용하면 내가 직접 생각하지 않아도 된다고 느낀다." },
+    { id:20, reverse:false, dim:"INNO",  text:"나는 AI 기술 동향을 파악하기 위해 스스로 정보를 수집한다." },
+    { id:21, reverse:false, dim:"ETHIC", text:"나는 AI가 사람을 대신해 의사결정을 내릴 때 그 과정이 설명 가능해야 한다고 생각한다." },
+    { id:22, reverse:true,  dim:"ETHIC", text:"나는 AI 활용으로 인한 사회적 영향은 내가 신경 쓸 일이 아니라고 본다." },
+    { id:23, reverse:true,  dim:"JUDE",  text:"나는 AI가 제시한 결과를 별도 확인 없이 그대로 사용한다." },
+    { id:24, reverse:false, dim:"INNO",  text:"나는 AI를 활용한 새로운 업무 방식을 동료에게 먼저 제안한다." },
+    { id:25, reverse:false, dim:"INNO",  text:"나는 AI를 활용한 새로운 접근 방식을 팀 내에서 주도적으로 시도한다." },
+    { id:26, reverse:true,  dim:"INNO",  text:"나는 AI 관련 새로운 시도보다 기존 방식을 유지하는 것을 선호한다." },
+    { id:27, reverse:false, dim:"APAP",  text:"나는 조직에서 새로운 AI 도구를 도입하면 빠르게 적응하려 노력한다." },
+    { id:28, reverse:true,  dim:"JUDE",  text:"나는 AI의 판단이 내 판단보다 더 정확하다고 생각한다." },
   ];
 
-  const qTexts = [
-    "AI 기술의 발전은 세상을 더 나은 곳으로 만들 것이라 생각한다.",
-    "AI 도구 활용은 결과물 뿐 아니라, 활용 과정에도 긍정적 변화를 가져온다.",
-    "현 수준의 AI 기술은 사회적으로 유의미한 긍정적 변화를 가져올 수 없다.",
-    "기술의 효과성을 극대화하기 위해서라면 AI의 설명력은 중요하지 않다.",
-    "지나치게 데이터 의존적인 AI 모델은 과거의 실수를 되풀이할 우려가 있다.",
-    "AI 개발 시 경제성보다도 잠재적인 위험성을 우선 고려해야 한다.",
-    "나는 사람들이 전반적으로 선한 의도를 갖고 AI를 활용한다고 믿는다.",
-    "AI를 활용할 때, 다양한 프롬프트를 활용해 접근하는 것을 즐긴다.",
-    "AI에 대한 주요 이슈는 대중에게 공개되지 않은 곳에서 논의되고 결정된다.",
-  ];
+  const dimMeta = {
+    INNO:  { label: "AI 혁신 주도성",    desc: "조직 내 AI 활용을 능동적으로 탐색하고 새로운 방식을 주도하려는 성향. 변화의 발의자로서의 지향성." },
+    APAP:  { label: "AI 적응 유연성",    desc: "조직의 AI 도입·도구 변화를 위협이 아닌 적응 과제로 수용하는 성향. 변화에 대한 평가적 개방성." },
+    ETHIC: { label: "AI 윤리적 민감성",  desc: "AI 활용이 타인·조직·사회에 미치는 영향에 대한 지각 및 평가적 반응 성향. 외부 지향적." },
+    JUDE:  { label: "AI 판단 위임 성향", desc: "AI 출력물을 비판적 검토 없이 수용하거나 자신의 판단을 AI에 위임하려는 경향성. 내부 지향적." },
+  };
 
+  const scaleLabels = { 1:'전혀 아니다', 2:'아니다', 3:'그렇다', 4:'매우 그렇다' };
   const answers = {};
   let activeQ = null;
 
-  const scaleLabels = {
-    1: '전혀 아니다',
-    2: '아니다',
-    3: '보통이다',
-    4: '그렇다',
-    5: '매우 그렇다'
-  };
+  // Render question cards
+  const container = document.getElementById('questionContainer');
+  const resultPanel = document.getElementById('resultPanel');
 
-  // Card click → activate
-  document.querySelectorAll('.q-card').forEach(card => {
-    card.addEventListener('click', () => activateQ(parseInt(card.dataset.q)));
+  questions.forEach((q, i) => {
+    const delay = Math.min(i * 0.025, 0.7);
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.dataset.q = q.id;
+    card.style.animationDelay = delay + 's';
+    card.innerHTML = `
+      <div class="q-num">${q.id}</div>
+      <div class="q-body"><div class="q-text">${q.text}</div></div>
+      <div class="q-badge" id="badge-${q.id}">미응답</div>
+    `;
+    card.addEventListener('click', () => activateQ(q.id));
+    container.insertBefore(card, resultPanel);
   });
 
   function activateQ(qId) {
     activeQ = qId;
     document.querySelectorAll('.q-card').forEach(c => c.classList.remove('active'));
     document.querySelector(`.q-card[data-q="${qId}"]`).classList.add('active');
-
-    const short = qTexts[qId-1].length > 26 ? qTexts[qId-1].substring(0,26)+'…' : qTexts[qId-1];
+    const txt = questions.find(q => q.id === qId).text;
+    const short = txt.length > 26 ? txt.substring(0, 26) + '…' : txt;
     document.getElementById('scaleGuideQ').textContent = `Q${qId}. ${short}`;
-
-    // Show scale row, hide submit
     document.getElementById('scaleRow').style.display = 'flex';
     document.getElementById('submitBtn').classList.remove('show');
-
-    // Reflect existing answer
     const cur = answers[qId];
     document.querySelectorAll('.scale-btn').forEach(b => {
       b.classList.toggle('selected', parseInt(b.dataset.v) === cur);
     });
   }
 
-  // Scale click
   document.querySelectorAll('.scale-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       if (activeQ === null) return;
       const val = parseInt(btn.dataset.v);
       answers[activeQ] = val;
-
       document.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
-
-      // Badge — show label text instead of number
       const badge = document.getElementById(`badge-${activeQ}`);
       if (badge) badge.textContent = scaleLabels[val];
-
-      // Card answered
       document.querySelector(`.q-card[data-q="${activeQ}"]`).classList.add('answered');
-
       updateProgress();
-
-      // Auto-advance after 280ms
       setTimeout(() => {
         const nextUnanswered = questions.find(q => q.id > activeQ && answers[q.id] === undefined);
         if (nextUnanswered) {
           activateQ(nextUnanswered.id);
           document.querySelector(`.q-card[data-q="${nextUnanswered.id}"]`)
-            .scrollIntoView({ behavior:'smooth', block:'center' });
-        } else if (Object.keys(answers).length === 9) {
-          // All done
+            .scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else if (Object.keys(answers).length === TOTAL) {
           document.getElementById('scaleRow').style.display = 'none';
           document.getElementById('submitBtn').classList.add('show');
           document.getElementById('scaleGuideQ').textContent = '✅ 모든 문항에 응답하셨습니다!';
@@ -452,8 +274,8 @@
 
   function updateProgress() {
     const n = Object.keys(answers).length;
-    document.getElementById('progressBar').style.width = (n/9*100)+'%';
-    document.getElementById('progressCount').textContent = `${n} / 9`;
+    document.getElementById('progressBar').style.width = (n / TOTAL * 100) + '%';
+    document.getElementById('progressCount').textContent = `${n} / ${TOTAL}`;
   }
 
   function submitSurvey() {
@@ -462,85 +284,88 @@
       document.getElementById('unansweredNote').style.display = 'block';
       activateQ(missing[0].id);
       document.querySelector(`.q-card[data-q="${missing[0].id}"]`)
-        ?.scrollIntoView({ behavior:'smooth', block:'center' });
+        ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
     document.getElementById('unansweredNote').style.display = 'none';
 
-    // Score
+    // Compute reverse-scored values (4pt: 5 - raw)
     const scored = {};
-    questions.forEach(q => { scored[q.id] = q.reverse ? 6-answers[q.id] : answers[q.id]; });
-    const total = Object.values(scored).reduce((a,b)=>a+b,0);
-    const pct = Math.round(total/45*100);
+    questions.forEach(q => { scored[q.id] = q.reverse ? 5 - answers[q.id] : answers[q.id]; });
 
-    // Dims
+    // Dimension aggregation
     const dims = {};
-    questions.forEach(q => {
-      if (!dims[q.dim]) dims[q.dim] = {sum:0,count:0};
-      dims[q.dim].sum += scored[q.id]; dims[q.dim].count++;
-    });
-    const dimEntries = Object.entries(dims).map(([name,d]) => ({
-      name, avg:(d.sum/d.count).toFixed(1), pct:Math.round(d.sum/(d.count*5)*100)
+    Object.keys(dimMeta).forEach(k => { dims[k] = { sum: 0, count: 0 }; });
+    questions.forEach(q => { dims[q.dim].sum += scored[q.id]; dims[q.dim].count++; });
+
+    const dimEntries = Object.entries(dims).map(([key, d]) => ({
+      key, label: dimMeta[key].label, desc: dimMeta[key].desc,
+      avg: (d.sum / d.count).toFixed(2),
+      pct: Math.round(d.sum / (d.count * 4) * 100),
+      sum: d.sum, max: d.count * 4,
     }));
 
-    let level, levelColor, levelDesc;
-    if (pct>=80)      { level="AI 친화적 태도"; levelColor="#059669"; levelDesc="AI 기술에 대해 전반적으로 긍정적이고 성숙한 태도를 갖고 있습니다."; }
-    else if (pct>=60) { level="균형적 태도";    levelColor="#2563eb"; levelDesc="AI에 대해 긍정적 측면과 위험 모두를 균형 있게 인식하고 있습니다."; }
-    else if (pct>=40) { level="신중한 태도";    levelColor="#d97706"; levelDesc="AI 기술의 가능성보다 위험성에 더 민감하게 반응하는 경향이 있습니다."; }
-    else              { level="회의적 태도";    levelColor="#dc2626"; levelDesc="AI 기술에 대해 전반적으로 비판적이거나 회의적인 시각을 갖고 있습니다."; }
+    const totalScore = Object.values(scored).reduce((a, b) => a + b, 0);
+    const totalMax = TOTAL * 4;
+    const totalPct = Math.round(totalScore / totalMax * 100);
 
     const panel = document.getElementById('resultPanel');
     panel.innerHTML = `
       <div class="result-header">
         <div class="result-icon">✅</div>
         <h2>검사가 완료되었습니다</h2>
-        <p>총 9문항 응답 완료 · 역채점 자동 반영</p>
+        <p>총 ${TOTAL}문항 응답 완료 · 역문항 자동 보정 · 4점 척도</p>
       </div>
+
       <div class="score-total">
         <div>
           <div class="score-total-label">종합 점수</div>
-          <div style="color:${levelColor};font-weight:600;font-size:13px;margin-top:4px;">${level}</div>
-          <div class="score-total-sub" style="margin-top:4px;max-width:230px;">${levelDesc}</div>
+          <div class="score-total-sub" style="margin-top:4px;">전체 ${TOTAL}문항 합산 (역문항 자동 반영)</div>
         </div>
         <div>
-          <div class="score-total-val">${total}<span style="font-size:14px;color:#94a3b8"> / 45</span></div>
-          <div class="score-total-sub" style="text-align:right">${pct}점 (100점 환산)</div>
+          <div class="score-total-val">${totalScore}<span style="font-size:14px;color:#94a3b8"> / ${totalMax}</span></div>
+          <div class="score-total-sub" style="text-align:right">${totalPct}점 (100점 환산)</div>
         </div>
       </div>
+
       <div class="score-grid">
-        ${dimEntries.map(d=>`
+        ${dimEntries.map(d => `
           <div class="score-card">
-            <div class="score-card-label">${d.name}</div>
-            <div class="score-card-val">${d.avg}<span style="font-size:12px;color:#94a3b8"> / 5.0</span></div>
-            <div class="score-card-sub">${d.pct}% 수준</div>
+            <div class="score-card-label">${d.label}</div>
+            <div class="score-card-val">${d.avg}<span style="font-size:12px;color:#94a3b8"> / 4.00</span></div>
+            <div class="score-card-sub">${d.sum}점 / ${d.max}점 &nbsp;(${d.pct}%)</div>
           </div>`).join('')}
       </div>
+
       <div class="dim-title">영역별 상세 분석</div>
-      ${dimEntries.map(d=>`
+      ${dimEntries.map(d => `
         <div class="dim-bar-wrap">
-          <div class="dim-bar-meta"><span>${d.name}</span><span style="font-weight:600;color:var(--blue)">${d.avg} / 5.0</span></div>
+          <div class="dim-bar-meta">
+            <span style="font-weight:600;color:var(--navy)">${d.label}</span>
+            <span style="font-weight:600;color:var(--blue)">${d.avg} / 4.00</span>
+          </div>
+          <div class="dim-bar-desc">${d.desc}</div>
           <div class="dim-bar-track"><div class="dim-bar-fill" style="width:0%"></div></div>
         </div>`).join('')}
-      <div class="review-title">문항별 응답 내역</div>
-      ${questions.map((q,i)=>`
+
+      <div class="review-title">문항별 응답 점수</div>
+      ${questions.map(q => `
         <div class="review-item">
           <div class="review-num">${q.id}</div>
-          <div class="review-q">${qTexts[i].length>28?qTexts[i].substring(0,28)+'…':qTexts[i]}</div>
-          <div style="display:flex;align-items:center;gap:6px;">
-            <div class="review-score" style="font-size:12px;font-weight:600;">${scaleLabels[answers[q.id]]}</div>
-          </div>
+          <div class="review-q">${q.text.length > 34 ? q.text.substring(0, 34) + '…' : q.text}</div>
+          <div class="review-score-num">${scored[q.id]}</div>
         </div>`).join('')}
+
       <button class="btn-reset" onclick="resetSurvey()">↺ 처음부터 다시 응답하기</button>
     `;
 
     panel.classList.add('show');
-    panel.scrollIntoView({ behavior:'smooth', block:'start' });
+    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
     document.getElementById('fixedScale').style.display = 'none';
 
     setTimeout(() => {
-      panel.querySelectorAll('.dim-bar-fill').forEach((el,i) => {
-        const target = dimEntries[i].pct + '%';
-        setTimeout(() => { el.style.width = target; }, 80);
+      panel.querySelectorAll('.dim-bar-fill').forEach((el, i) => {
+        setTimeout(() => { el.style.width = dimEntries[i].pct + '%'; }, 80 * i);
       });
     }, 200);
   }
@@ -549,9 +374,9 @@
     Object.keys(answers).forEach(k => delete answers[k]);
     activeQ = null;
     questions.forEach(q => { document.getElementById(`badge-${q.id}`).textContent = '미응답'; });
-    document.querySelectorAll('.q-card').forEach(c => c.classList.remove('answered','active'));
+    document.querySelectorAll('.q-card').forEach(c => c.classList.remove('answered', 'active'));
     document.getElementById('progressBar').style.width = '0%';
-    document.getElementById('progressCount').textContent = '0 / 9';
+    document.getElementById('progressCount').textContent = `0 / ${TOTAL}`;
     document.getElementById('unansweredNote').style.display = 'none';
     document.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('selected'));
     document.getElementById('scaleGuideQ').textContent = '↑ 문항을 클릭하여 선택해주세요';
@@ -560,10 +385,9 @@
     document.getElementById('fixedScale').style.display = 'block';
     const panel = document.getElementById('resultPanel');
     panel.classList.remove('show'); panel.innerHTML = '';
-    window.scrollTo({ top:0, behavior:'smooth' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // Auto-activate Q1 on load
   window.addEventListener('load', () => setTimeout(() => activateQ(1), 500));
 </script>
 </body>
